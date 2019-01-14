@@ -22,6 +22,7 @@ def classifier_gmnpsvm (train_fname=traindat,test_fname=testdat,label_fname=labe
 
 	out=svm.apply(feats_test).get_labels()
 	return out,kernel
+
 if __name__=='__main__':
 	print('GMNPSVM')
 	classifier_gmnpsvm(*parameter_list[0])

@@ -1,15 +1,8 @@
 
 %{
  #include <shogun/machine/Machine.h>
- #include <shogun/classifier/svm/GNPPSVM.h>
- #ifdef USE_GPL_SHOGUN
- #include <shogun/classifier/svm/GPBTSVM.h>
- #endif //USE_GPL_SHOGUN
  #include <shogun/machine/DistanceMachine.h>
- #include <shogun/classifier/LDA.h>
- #include <shogun/classifier/svm/LibLinear.h>
- #include <shogun/classifier/svm/LibSVM.h>
- #include <shogun/classifier/svm/LibSVMOneClass.h>
+#include <shogun/classifier/svm/LibLinear.h>
 #ifdef USE_SVMLIGHT
  #include <shogun/classifier/svm/SVMLight.h>
  #include <shogun/classifier/svm/SVMLightOneClass.h>
@@ -21,7 +14,6 @@
  #include <shogun/classifier/svm/MPDSVM.h>
  #include <shogun/classifier/svm/OnlineSVMSGD.h>
  #include <shogun/classifier/svm/OnlineLibLinear.h>
- #include <shogun/classifier/Perceptron.h>
  #include <shogun/classifier/AveragedPerceptron.h>
  #include <shogun/classifier/svm/SVM.h>
  #include <shogun/machine/KernelMachine.h>

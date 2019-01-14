@@ -23,14 +23,7 @@
 /* Remove C Prefix */
 %rename(Machine) CMachine;
 %rename(KernelMachine) CKernelMachine;
-%rename(GNPPSVM) CGNPPSVM;
-#ifdef USE_GPL_SHOGUN
-%rename(GPBTSVM) CGPBTSVM;
-#endif //USE_GPL_SHOGUN
-%rename(LDA) CLDA;
 %rename(LibLinear) CLibLinear;
-%rename(LibSVM) CLibSVM;
-%rename(LibSVMOneClass) CLibSVMOneClass;
 #ifdef USE_SVMLIGHT
 %rename(SVMLight) CSVMLight;
 %rename(SVMLightOneClass) CSVMLightOneClass;
@@ -42,7 +35,6 @@
 %rename(MPDSVM) CMPDSVM;
 %rename(OnlineSVMSGD) COnlineSVMSGD;
 %rename(OnlineLibLinear) COnlineLibLinear;
-%rename(Perceptron) CPerceptron;
 %rename(AveragedPerceptron) CAveragedPerceptron;
 #ifndef HAVE_PYTHON
 %rename(SVM) CSVM;
@@ -82,14 +74,7 @@
 %include <shogun/classifier/svm/SVM.h>
 %include <shogun/machine/LinearMachine.h>
 %include <shogun/machine/OnlineLinearMachine.h>
-%include <shogun/classifier/svm/GNPPSVM.h>
-#ifdef USE_GPL_SHOGUN
-%include <shogun/classifier/svm/GPBTSVM.h>
-#endif //USE_GPL_SHOGUN
-%include <shogun/classifier/LDA.h>
 %include <shogun/classifier/svm/LibLinear.h>
-%include <shogun/classifier/svm/LibSVM.h>
-%include <shogun/classifier/svm/LibSVMOneClass.h>
 
 #ifdef USE_SVMLIGHT
 %ignore VERSION;
@@ -109,7 +94,6 @@
 %include <shogun/classifier/svm/MPDSVM.h>
 %include <shogun/classifier/svm/OnlineSVMSGD.h>
 %include <shogun/classifier/svm/OnlineLibLinear.h>
-%include <shogun/classifier/Perceptron.h>
 %include <shogun/classifier/AveragedPerceptron.h>
 #ifdef USE_GPL_SHOGUN
 %include <shogun/classifier/svm/SVMLin.h>
