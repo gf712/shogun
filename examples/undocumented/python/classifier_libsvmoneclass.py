@@ -5,11 +5,7 @@ testdat = '../data/fm_test_real.dat'
 parameter_list = [[traindat,testdat,2.2,1,1e-7],[traindat,testdat,2.1,1,1e-5]]
 
 def classifier_libsvmoneclass (train_fname=traindat,test_fname=testdat,width=2.1,C=1,epsilon=1e-5):
-<<<<<<< HEAD
-	from shogun import RealFeatures, LibSVMOneClass, CSVFile
-=======
 	from shogun import RealFeatures, CSVFile
->>>>>>> started working on refactoring examples to use new Python API
 	import shogun as sg
 
 	feats_train=RealFeatures(CSVFile(train_fname))
@@ -17,16 +13,11 @@ def classifier_libsvmoneclass (train_fname=traindat,test_fname=testdat,width=2.1
 
 	kernel=sg.kernel("GaussianKernel", log_width=width)
 
-<<<<<<< HEAD
-	svm=LibSVMOneClass(C, kernel)
-	svm.set_epsilon(epsilon)
-=======
 	svm=sg.machine("LibSVMOneClass")
 	svm.put("C1", C)
 	svm.put("C2", C)
 	svm.put("kernel", kernel)
 	svm.put("epsilon", epsilon)
->>>>>>> started working on refactoring examples to use new Python API
 	svm.train(feats_train)
 
 	predictions = svm.apply(feats_test)
