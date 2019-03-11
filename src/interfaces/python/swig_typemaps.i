@@ -1342,6 +1342,18 @@ TYPEMAP_SPARSEFEATURES_OUT(PyObject,      NPY_OBJECT)
   }
 %}
 
+
+%include "std_set.i"
+
+%template(stringSet) std::set<std::string>;
+
+%ignore create;
+%ignore delete_object;
+%ignore create_object;
+%rename(_available_objects) available_objects;
+%include <shogun/base/class_list.h>
+
+
 %pythoncode %{
 import sys
 
@@ -1436,6 +1448,56 @@ def _internal_get_param(self, name):
         raise KeyError("There is no parameter called '{}' in {}".format(name, self.get_name()))
 
 _swig_monkey_patch(SGObject, "get", _internal_get_param)
+
+def _get_params(self):
+	"""
+	Scikit learn like get_params
+	"""
+	result = {}
+	for param in self.parameter_names():
+		try:
+			result[param] = self.get(param)
+		except:
+			result[param] = None
+	return result
+
+def _set_params(self, **kwargs):
+	"""
+	Scikit learn like set_params
+	"""
+	for k,v in kwargs.items():
+		self.put(k, v)
+
+_swig_monkey_patch(SGObject, "get_params",_get_params)
+_swig_monkey_patch(SGObject, "set_params",_set_params)
+
+import functools
+
+def _internal_factory_mapping(algorithm_name, docstring=None):
+    """
+    Internal function to export factories to the module
+    scope.
+    """
+    for factory in _FACTORIES:
+        try:
+            sys.modules[__name__].__dict__[factory](algorithm_name)
+            func = functools.partial(sys.modules[__name__].__dict__[factory], algorithm_name)
+            func.__doc__ = docstring
+            return func
+        except SystemError:
+            pass
+        except Exception:
+            raise
+    raise ImportError("Could not generate new class for {}".format(algorithm_name))
+
+for algorithm in _shogun._available_objects():
+    try:
+        _swig_monkey_patch(sys.modules[__name__], algorithm, _internal_factory_mapping(algorithm))
+    except ValueError:
+        # nothing to do here, class is already in module
+        continue
+    except Exception as e:
+        print(algorithm, e)
 
 __version__ = _shogun.Version_get_version_main()
 %}
