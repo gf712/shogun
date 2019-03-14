@@ -621,7 +621,7 @@ void CKernelMachine::init()
 	SG_ADD(&use_bias, "use_bias", "Bias shall be used.");
 	SG_ADD(&m_bias, "m_bias", "Bias term.");
 	SG_ADD(&m_alpha, "m_alpha", "Array of coefficients alpha.");
-	SG_ADD(&m_svs, "m_svs", "Number of ``support vectors''.");
+	SG_ADD(&m_svs, "m_svs", "Number of 'support vectors'.");
 }
 
 bool CKernelMachine::supports_locking() const

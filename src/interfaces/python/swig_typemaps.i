@@ -1427,6 +1427,18 @@ for getter in _GETTERS:
     _rename_python_function(_shogun.SGObject, getter, _private_getter)
     _internal_getter_methods.append(_shogun.SGObject.__dict__[_private_getter])
 
+
+# gets all the functions that are used for casting
+_CASTABLE_TYPES = [x for x in sys.modules[__name__].__dict__ if x.startswith('as_')]
+
+def cast_from_sgobject(obj):
+    for castable_type in _CASTABLE_TYPES:
+        try:
+            return sys.modules[__name__].__dict__[castable_type](obj)
+        except Exception as e:
+            continue
+    return obj
+
 def _internal_get_param(self, name):
     """
     Returns the value of the given parameter.
@@ -1437,7 +1449,10 @@ def _internal_get_param(self, name):
 
     for getter in _internal_getter_methods:
         try:
-            return getter(self, name)
+            result = getter(self, name)
+            if isinstance(result, _shogun.SGObject):
+                result = cast_from_sgobject(result)
+            return result
         except SystemError:
             pass
         except Exception:
@@ -1451,7 +1466,7 @@ _swig_monkey_patch(SGObject, "get", _internal_get_param)
 
 def _get_params(self):
 	"""
-	Scikit learn like get_params
+	Scikit-learn style self.get_params
 	"""
 	result = {}
 	for param in self.parameter_names():
@@ -1463,7 +1478,7 @@ def _get_params(self):
 
 def _set_params(self, **kwargs):
 	"""
-	Scikit learn like set_params
+	Scikit-learn style self.set_params
 	"""
 	for k,v in kwargs.items():
 		self.put(k, v)
@@ -1471,33 +1486,33 @@ def _set_params(self, **kwargs):
 _swig_monkey_patch(SGObject, "get_params",_get_params)
 _swig_monkey_patch(SGObject, "set_params",_set_params)
 
-import functools
-
-def _internal_factory_mapping(algorithm_name, docstring=None):
-    """
-    Internal function to export factories to the module
-    scope.
-    """
-    for factory in _FACTORIES:
-        try:
-            sys.modules[__name__].__dict__[factory](algorithm_name)
-            func = functools.partial(sys.modules[__name__].__dict__[factory], algorithm_name)
-            func.__doc__ = docstring
-            return func
-        except SystemError:
-            pass
-        except Exception:
-            raise
-    raise ImportError("Could not generate new class for {}".format(algorithm_name))
-
-for algorithm in _shogun._available_objects():
-    try:
-        _swig_monkey_patch(sys.modules[__name__], algorithm, _internal_factory_mapping(algorithm))
-    except ValueError:
-        # nothing to do here, class is already in module
-        continue
-    except Exception as e:
-        print(algorithm, e)
+# import functools
+#
+# def _internal_factory_mapping(algorithm_name, docstring=None):
+#     """
+#     Internal function to export factories to the module
+#     scope.
+#     """
+#     for factory in _FACTORIES:
+#         try:
+#             sys.modules[__name__].__dict__[factory](algorithm_name)
+#             func = functools.partial(sys.modules[__name__].__dict__[factory], algorithm_name)
+#             func.__doc__ = docstring
+#             return func
+#         except SystemError:
+#             pass
+#         except Exception:
+#             raise
+#     raise ImportError("Could not generate new class for {}".format(algorithm_name))
+#
+# for algorithm in _shogun._available_objects():
+#     try:
+#         _swig_monkey_patch(sys.modules[__name__], algorithm, _internal_factory_mapping(algorithm))
+#     except ValueError:
+#         # nothing to do here, class is already in module
+#         continue
+#     except Exception as e:
+#         print(algorithm, e)
 
 __version__ = _shogun.Version_get_version_main()
 %}
