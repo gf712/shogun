@@ -11,6 +11,7 @@
 #include <shogun/lib/config.h>
 #include <shogun/lib/memory.h>
 
+#include <shogun/base/constexpr_map.h>
 #include <shogun/base/DynArray.h>
 #include <shogun/base/Parameter.h>
 #include <shogun/base/ShogunEnv.h>
@@ -57,7 +58,8 @@
 namespace shogun
 {
 
-	typedef std::map<BaseTag, AnyParameter> ParametersMap;
+	using ParametersMap = HashTable<AnyParameter, 128>;
+	using ParametersMapRuntime = std::map<BaseTag, AnyParameter>;
 	typedef std::unordered_map<std::string, std::string> ObsParamsList;
 
 	class CSGObject::Self
@@ -69,7 +71,7 @@ namespace shogun
 			{
 				error("Can not register {} twice", tag.name().c_str());
 			}
-			map[tag] = parameter;
+			map[tag.name()] = parameter;
 		}
 
 		void update(const BaseTag& tag, const Any& value)
@@ -80,36 +82,36 @@ namespace shogun
 				    "Can not update unregistered parameter {}",
 				    tag.name().c_str());
 			}
-			map.at(tag).set_value(value);
+			map.at(tag.name()).set_value(value);
 		}
 
 		AnyParameter& at(const BaseTag& tag)
 		{
-			return map.at(tag);
+			return map.at(tag.name());
 		}
 
 		const AnyParameter& at(const BaseTag& tag) const
 		{
-			return map.at(tag);
+			return map.at(tag.name());
 		}
 
 		AnyParameter get(const BaseTag& tag) const
 		{
 			if(!has(tag))
 				return AnyParameter();
-			return map.at(tag);
+			return map.at(tag.name());
 		}
 
 		bool has(const BaseTag& tag) const
 		{
-			return map.find(tag) != map.end();
+		    return std::find(map.begin(), map.end(), tag) != map.end();
 		}
 
-		ParametersMap filter(ParameterProperties pprop) const
+		ParametersMapRuntime filter(ParameterProperties pprop) const
 		{
-			ParametersMap result;
+			ParametersMapRuntime result;
 			std::copy_if(
-			    map.cbegin(), map.cend(), std::inserter(result, result.end()),
+			    map.begin(), map.end(), std::inserter(result, result.end()),
 			    [&pprop](const auto& each) {
 					auto p = each.second.get_properties();
 					// if the filter mask is ALL, also include parameters with no set properties (NONE)
@@ -496,7 +498,7 @@ void CSGObject::update_parameter(const BaseTag& _tag, const Any& value)
 
 	if (pprop.has_property(ParameterProperties::CONSTRAIN))
 	{
-		auto msg = self->map[_tag].get_constrain_function()(value);
+		auto msg = self->map[_tag.name()].get_constrain_function()(value);
 		if (!msg.empty())
 		{
 			error(
