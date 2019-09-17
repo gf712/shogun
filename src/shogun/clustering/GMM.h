@@ -65,28 +65,15 @@ class CGMM : public RandomMixin<CDistribution>
 
 		/** learn model using EM
 		 *
-		 * @param min_cov minimum covariance
-		 * @param max_iter maximum iterations
-		 * @param min_change minimum change in log likelihood
-		 *
-		 * @return log likelihood of training data
+		 * @return true if training successful
 		 */
-		float64_t train_em(float64_t min_cov=1e-9, int32_t max_iter=1000,
-				float64_t min_change=1e-9);
+		bool train_em();
 
 		/** learn model using SMEM
 		 *
-		 * @param max_iter maximum SMEM iterations
-		 * @param max_cand maximum split-merge candidates
-		 * @param min_cov minimum covariance
-		 * @param max_em_iter maximum iterations for EM
-		 * @param min_change minimum change in log likelihood
-		 *
-		 * @return log likelihood of training data
+		 * @return true if training successful
 		 */
-		float64_t train_smem(int32_t max_iter=100, int32_t max_cand=5,
-				float64_t min_cov=1e-9, int32_t max_em_iter=1000,
-				float64_t min_change=1e-9);
+		bool train_smem();
 
 		/** maximum likelihood estimation
 		 *
@@ -144,6 +131,12 @@ class CGMM : public RandomMixin<CDistribution>
 		 */
 		virtual float64_t get_likelihood_example(int32_t num_example);
 
+		/** get mean of each component
+		 *
+		 * @return mean
+		 */
+		std::vector<SGVector<float64_t>> get_mean();
+
 		/** get nth mean
 		 *
 		 * @param num index of mean to retrieve
@@ -158,6 +151,12 @@ class CGMM : public RandomMixin<CDistribution>
 		 * @param num index mean to set
 		 */
 		virtual void set_nth_mean(SGVector<float64_t> mean, int32_t num);
+
+		/** get covariance of each component
+		 *
+		 * @return covariance
+		 */
+		std::vector<SGMatrix<float64_t>> get_covariance();
 
 		/** get nth covariance
 		 *
@@ -202,7 +201,7 @@ class CGMM : public RandomMixin<CDistribution>
 		 *
 		 * @return sample
 		 */
-		SGVector<float64_t> sample();
+		SGVector<float64_t> sample() override;
 
 		/** cluster point
 		 *
@@ -238,11 +237,24 @@ class CGMM : public RandomMixin<CDistribution>
 		void partial_em(int32_t comp1, int32_t comp2, int32_t comp3,
 				float64_t min_cov, int32_t max_em_iter, float64_t min_change);
 
+
 	protected:
 		/** Mixture components */
 		std::vector<CGaussian*> m_components;
 		/** Mixture coefficients */
 		SGVector<float64_t> m_coefficients;
+
+		float64_t m_min_cov;
+		int32_t m_max_em_iter;
+		float64_t m_min_change;
+		ECovType m_cov_type;
+		int32_t m_max_iter;
+		int32_t m_max_cand;
+		int32_t m_n_components; 
+		float64_t m_log_likelihood;
+		std::vector<SGVector<float64_t>> m_mean;
+		std::vector<SGMatrix<float64_t>> m_covariance;
+
 };
 }
 #endif //_GMM_H__

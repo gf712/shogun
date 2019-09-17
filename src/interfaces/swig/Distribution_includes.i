@@ -4,7 +4,6 @@
 #include <shogun/distributions/PositionalPWM.h>
 #include <shogun/distributions/Gaussian.h>
 #include <shogun/distributions/KernelDensity.h>
-#include <shogun/clustering/GMM.h>
 #include <shogun/distributions/classical/ProbabilityDistribution.h>
 #include <shogun/distributions/classical/GaussianDistribution.h>
 %}

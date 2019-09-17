@@ -44,6 +44,15 @@ class CHistogram : public CDistribution
 		 */
 		virtual bool train(CFeatures* data=NULL);
 
+		/** sample from model
+		 *
+		 * @return sample
+		 */
+		SGVector<float64_t> sample() override
+		{
+			not_implemented(SOURCE_LOCATION);
+		}
+
 		/** get number of model parameters
 		 *
 		 * @return number of model parameters

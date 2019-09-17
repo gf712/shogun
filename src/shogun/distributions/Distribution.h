@@ -56,6 +56,12 @@ class CDistribution : public CSGObject
 		 */
 		virtual bool train(CFeatures* data=NULL)=0;
 
+		/** sample from distribution
+		 *
+		 * @return sample
+		 */
+		virtual SGVector<float64_t> sample()=0;
+
 		/** get number of parameters in model
 		 *
 		 * abstract base method

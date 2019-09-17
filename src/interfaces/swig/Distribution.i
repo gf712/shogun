@@ -9,6 +9,7 @@
 %feature("autodoc", "get_histogram(self) -> numpy 1dim array of float") get_histogram;
 %feature("autodoc", "get_log_transition_probs(self) -> numpy 1dim array of %float") get_log_transition_probs;
 %feature("autodoc", "get_transition_probs(self) -> numpy 1dim array of %float") get_transition_probs;
+%feature("autodoc", "sample(self) -> numpy 1dim array of float") sample;
 #endif
 
 /* Remove C Prefix */
@@ -16,7 +17,6 @@
 %rename(HMM) CHMM;
 %rename(PositionalPWM) CPositionalPWM;
 %rename(Gaussian) CGaussian;
-%rename(GMM) CGMM;
 %rename(KernelDensity) CKernelDensity;
 %rename(GaussianDistribution) CGaussianDistribution;
 
@@ -31,6 +31,5 @@
 %include <shogun/distributions/PositionalPWM.h>
 %include <shogun/distributions/Gaussian.h>
 %include <shogun/distributions/KernelDensity.h>
-%include <shogun/clustering/GMM.h>
 %include <shogun/distributions/classical/ProbabilityDistribution.h>
 %include <shogun/distributions/classical/GaussianDistribution.h>

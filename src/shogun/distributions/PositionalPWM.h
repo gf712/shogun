@@ -36,6 +36,15 @@ class CPositionalPWM : public CDistribution
 		 * @return whether training was successful
 		 */
 		virtual bool train(CFeatures* data=NULL);
+		
+		/** sample from model
+		 *
+		 * @return sample
+		 */
+		SGVector<float64_t> sample() override
+		{
+			not_implemented(SOURCE_LOCATION);
+		}
 
 		/** get number of parameters in model
 		 *

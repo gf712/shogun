@@ -504,6 +504,12 @@ class CHMM : public RandomMixin<CDistribution>
 		 * @return whether training was successful
 		 */
 		virtual bool train(CFeatures* data=NULL);
+
+		SGVector<float64_t> sample() override
+		{
+			not_implemented(SOURCE_LOCATION);
+		}
+
 		virtual int32_t get_num_model_parameters() { return N*(N+M+2); }
 		virtual float64_t get_log_model_parameter(int32_t num_param);
 		virtual float64_t get_log_derivative(int32_t num_param, int32_t num_example);

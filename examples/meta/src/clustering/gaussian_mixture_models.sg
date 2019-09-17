@@ -5,25 +5,22 @@ Features features_train = features(f_feats_train)
 #![create_features]
 
 #![create_gmm_instance]
-int num_components = 3
-GMM gmm(num_components)
-gmm.put("seed", 1)
+Distribution gmm = distribution("GMM", n_components=3, seed=1)
 #![create_gmm_instance]
 
 #![train_sample]
 gmm.put("features", features_train)
-gmm.train_em()
+gmm.run("train_em")
 RealVector output = gmm.sample()
 #![train_sample]
 
 #![training_smem]
-gmm.train_smem()
+gmm.run("train_smem")
 #![training_smem]
 
 #![extract_params]
-int component_num = 1
-RealVector nth_mean = gmm.get_nth_mean(component_num)
-RealMatrix nth_cov = gmm.get_nth_cov(component_num)
+RealVector nth_mean = gmm.get("mean", 1)
+RealMatrix nth_cov = gmm.get("covariance", 1)
 RealVector coef = gmm.get_real_vector("coefficients")
 #![extract_params]
 

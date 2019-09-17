@@ -89,6 +89,15 @@ public :
 	 */
 	virtual bool train(CFeatures* data=NULL);
 
+	/** sample from model
+	 *
+	 * @return sample
+	 */
+	SGVector<float64_t> sample() override
+	{
+		not_implemented(SOURCE_LOCATION);
+	}
+
 	/** compute kde for given test points
 	 *
 	 * @param test data points at which kernel density is to be evaluated

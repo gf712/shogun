@@ -669,7 +669,7 @@ std::string CSGObject::to_string() const
 		{
 			ss << string_enum_reverse_lookup(it->first.name(), any_cast<machine_int_t>(value));
 		}
-		else if (value.visitable())
+		else if (value.visitable() && !it->second.get_properties().has_property(ParameterProperties::RUNFUNCTION))
 		{
 			try
 			{

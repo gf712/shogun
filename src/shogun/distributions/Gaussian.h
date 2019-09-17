@@ -205,7 +205,7 @@ class CGaussian : public RandomMixin<CDistribution>
 		 *
 		 * @return sample
 		 */
-		SGVector<float64_t> sample();
+		SGVector<float64_t> sample() override;
 
 		/** @param distribution is casted to CGaussian, NULL if not possible
 		 * Note that the object is SG_REF'ed

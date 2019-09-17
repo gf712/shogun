@@ -1030,6 +1030,7 @@ TYPEMAP_SPARSEFEATURES_OUT(PyObject,      NPY_OBJECT)
 import sys
 
 _FACTORIES = ["distance",
+              "distribution",
               "evaluation",
               "kernel",
               "machine",

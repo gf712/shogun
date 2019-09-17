@@ -64,6 +64,11 @@ class CLinearHMM : public CDistribution
 		 */
 		virtual bool train(CFeatures* data=NULL);
 
+		SGVector<float64_t> sample() override
+		{
+			not_implemented(SOURCE_LOCATION);
+		}
+
 		/** alternative train distribution
 		 *
 		 * @param indizes indices
