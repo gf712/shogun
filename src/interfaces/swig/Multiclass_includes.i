@@ -49,15 +49,5 @@
 #ifdef USE_GPL_SHOGUN
  #include <shogun/multiclass/MulticlassTreeGuidedLogisticRegression.h>
  #include <shogun/multiclass/MulticlassLogisticRegression.h>
- #include <shogun/multiclass/MulticlassOCAS.h>
- #include <shogun/multiclass/LaRank.h>
 #endif //USE_GPL_SHOGUN
- #include <shogun/multiclass/MulticlassSVM.h>
- #include <shogun/multiclass/GMNPSVM.h>
- #include <shogun/multiclass/ScatterSVM.h>
- #include <shogun/multiclass/KNN.h>
- #include <shogun/multiclass/GaussianNaiveBayes.h>
- #include <shogun/multiclass/QDA.h>
- #include <shogun/multiclass/MCLDA.h>
- #include <shogun/multiclass/ShareBoost.h>
 %}
