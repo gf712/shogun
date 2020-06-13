@@ -174,6 +174,14 @@ public:
 			} while (++col_begin != col_end);
 		}
 	}
+	void enter_sparse_matrix(index_t* rows, index_t* cols, index_t*) override
+	{
+		enter_matrix(rows, cols);
+	}
+	void enter_sparse_vector(index_t* size) override
+	{
+		enter_vector(size);
+	}
 	void enter_vector(index_t* size) override
 	{
 		read_array(size, "SGVector");
@@ -209,6 +217,8 @@ public:
 	void enter_matrix_row(index_t *rows, index_t *cols) override {}
 	void exit_matrix_row(index_t *rows, index_t *cols) override {}
 	void exit_matrix(index_t* rows, index_t* cols) override {}
+	void exit_sparse_matrix(index_t* rows, index_t* cols) override {}
+	void exit_sparse_vector(index_t* rows) override {}
 	void exit_vector(index_t* size) override {}
 	void exit_std_vector(size_t* size) override {}
 	void exit_map(size_t* size) override {}

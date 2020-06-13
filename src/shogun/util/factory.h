@@ -93,11 +93,30 @@ namespace shogun
 		{
 			return create_object<Kernel>(name.c_str());
 		}
+
 		template <class T>
 		std::shared_ptr<Features> features(SGMatrix<T> mat)
 		{
-			return std::make_shared<
-			    DenseFeatures<typename decltype(mat)::Scalar>>(mat);
+			return std::make_shared<DenseFeatures<T>>(mat);
+		}
+<<<<<<< Updated upstream
+
+=======
+		template <class T>
+		std::shared_ptr<Features> sparse_features(SGMatrix<T> mat)
+		{
+			return std::make_shared<SparseFeatures<T>>(mat);
+		}
+		template <class T>
+		std::shared_ptr<Features> sparse_features(SGSparseMatrix<T> mat)
+		{
+			return std::make_shared<SparseFeatures<T>>(mat);
+		}
+>>>>>>> Stashed changes
+		template <class T>
+		std::shared_ptr<Features> features(SGSparseMatrix<T> mat)
+		{
+			return std::make_shared<SparseFeatures<T>>(mat);
 		}
 
 		std::shared_ptr<Features> features(

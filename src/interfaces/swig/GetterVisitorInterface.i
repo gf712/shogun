@@ -17,7 +17,9 @@
 			VECTOR = 2,
 			MATRIX = 3,
 			STD_VECTOR = 4,
-			STD_MAP = 5
+			STD_MAP = 5,
+			SPARSE_VECTOR = 6,
+			SPARSE_MATRIX = 7,
 		};
 
 		template <typename Derived, typename InterfaceBaseType>
@@ -142,6 +144,41 @@
 				}
 			}
 
+			void enter_sparse_matrix(index_t* num_feat, index_t* num_vec, index_t* nnz) final
+			{
+				// initialise some variables needed to initialise a array	
+				dims = {(std::ptrdiff_t) *num_feat, (std::ptrdiff_t) *num_vec, (std::ptrdiff_t) *nnz};
+				if (m_type == SG_TYPE_TO_INTERFACE::NONE)
+					{
+						current_i = 0;
+						m_type = SG_TYPE_TO_INTERFACE::SPARSE_MATRIX;
+					}
+				else
+				{
+					m_nested_type = SG_TYPE_TO_INTERFACE::SPARSE_MATRIX;
+					nested_current_i = 0;
+					m_nested_interface_obj = nullptr;
+				}
+			}
+
+			void enter_sparse_vector(index_t* size) final
+			{
+				// only change dims if it is a nested call from sparse matrix
+				if (m_type != SG_TYPE_TO_INTERFACE::SPARSE_MATRIX)
+					dims = {(std::ptrdiff_t) *size};
+				if (m_type == SG_TYPE_TO_INTERFACE::NONE)
+				{
+					current_i = 0;
+					m_type = SG_TYPE_TO_INTERFACE::SPARSE_VECTOR;
+				}
+				else
+				{
+					m_nested_type = SG_TYPE_TO_INTERFACE::SPARSE_VECTOR;
+					nested_current_i = 0;
+					m_nested_interface_obj = nullptr;
+				}
+			}
+
 			void enter_vector(index_t *size) final
 			{
 				dims = {(std::ptrdiff_t) *size};
@@ -179,6 +216,22 @@
 			{
 				m_nested_interface_obj = nullptr;
 				if (m_type == SG_TYPE_TO_INTERFACE::MATRIX)
+					m_type = SG_TYPE_TO_INTERFACE::NONE;
+				m_nested_type = SG_TYPE_TO_INTERFACE::NONE;
+			}
+
+			void exit_sparse_matrix(index_t *rows, index_t *cols) final
+			{
+				m_nested_interface_obj = nullptr;
+				if (m_type == SG_TYPE_TO_INTERFACE::SPARSE_MATRIX)
+					m_type = SG_TYPE_TO_INTERFACE::NONE;
+				m_nested_type = SG_TYPE_TO_INTERFACE::NONE;
+			}
+
+			void exit_sparse_vector(index_t*) final
+			{
+				m_nested_interface_obj = nullptr;
+				if (m_type == SG_TYPE_TO_INTERFACE::SPARSE_VECTOR)
 					m_type = SG_TYPE_TO_INTERFACE::NONE;
 				m_nested_type = SG_TYPE_TO_INTERFACE::NONE;
 			}
@@ -235,6 +288,10 @@
 					case SG_TYPE_TO_INTERFACE::STD_VECTOR:
 						handle_list(v);
 					break;
+					case SG_TYPE_TO_INTERFACE::SPARSE_VECTOR:
+					case SG_TYPE_TO_INTERFACE::SPARSE_MATRIX:
+						handle_sparse_array(v);
+					break;
 					default:
 						*m_interface_obj = static_cast<Derived*>(this)->sg_to_interface(v);
 				}
@@ -263,6 +320,15 @@
 					// updating the values of the array
 					// so we do nothing after this
 				}
+			}
+
+			template <typename T>
+			void handle_sparse_array(const T* v)
+			{
+				if (!dims.empty() && !(*m_interface_obj))
+					*m_interface_obj = static_cast<Derived*>(this)->template create_sparse_array<T>(v, dims);		
+				else if (dims.empty() && !(*m_interface_obj))
+					error("Could not determine dimensions of sparse array!");	
 			}
 
 			template <typename T>

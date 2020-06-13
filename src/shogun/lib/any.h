@@ -189,6 +189,8 @@ namespace shogun
 		virtual void on(std::string*) = 0;
 		virtual void on(AutoValueEmpty*) = 0;
 		virtual void enter_matrix(index_t* rows, index_t* cols) = 0;
+		virtual void enter_sparse_matrix(index_t* num_feat, index_t* num_vec, index_t* nnz) = 0;
+		virtual void enter_sparse_vector(index_t* size) = 0;
 		virtual void enter_vector(index_t* size) = 0;
 		virtual void enter_std_vector(size_t* size) = 0;
 		virtual void enter_map(size_t* size) = 0;
@@ -196,6 +198,8 @@ namespace shogun
 		virtual void enter_auto_value(bool* is_empty) = 0;
 		virtual void exit_matrix_row(index_t* rows, index_t* cols) = 0;
 		virtual void exit_matrix(index_t* rows, index_t* cols) = 0;
+		virtual void exit_sparse_matrix(index_t* num_feat, index_t* num_vec) = 0;
+		virtual void exit_sparse_vector(index_t* size) = 0;
 		virtual void exit_vector(index_t* size) = 0;
 		virtual void exit_std_vector(size_t* size) = 0;
 		virtual void exit_map(size_t* size) = 0;
@@ -245,7 +249,7 @@ namespace shogun
 		void on(SGSparseVector<T>* _v)
 		{
 			auto size = _v->num_feat_entries * 2;
-			enter_vector(std::addressof(size));
+			enter_sparse_vector(std::addressof(size));
 			assert(size % 2 == 0);
 			size /= 2;
 			if (size != _v->num_feat_entries)
@@ -255,16 +259,23 @@ namespace shogun
 				on(std::addressof(_v->features[i].feat_index));
 				on(std::addressof(_v->features[i].entry));
 			}
-			exit_vector(std::addressof(size));
+			exit_sparse_vector(std::addressof(size));
 		}
 
 		template <typename T>
 		void on(SGSparseMatrix<T>* _m)
 		{
-			// FIXME
-			//_m->num_vectors;
-			//_m->num_features;
-			//_m->sparse_matrix;
+			auto n_feat = _m->num_features;
+			auto n_vec = _m->num_vectors;
+			auto nnz = _m->nnz();
+			enter_sparse_matrix(std::addressof(n_feat), std::addressof(n_vec), std::addressof(nnz));
+			if ((n_feat != _m->num_features) || (n_vec != _m->num_vectors))
+				*_m = SGSparseMatrix<T>(n_feat, n_vec);
+			for (auto index = 0; index < n_vec; index++)
+			{
+				on(std::addressof((*_m)[index]));
+			}
+			exit_sparse_matrix(std::addressof(n_feat), std::addressof(n_vec));
 		}
 
 		template <class T, class S>

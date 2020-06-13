@@ -110,6 +110,16 @@ namespace shogun
 				m_dims = {*rows, *cols};
 			}
 
+			virtual void enter_sparse_matrix(index_t* rows, index_t* cols, index_t*)
+			{
+				m_dims = {*rows, *cols};
+			}
+
+			virtual void enter_sparse_vector(index_t* size)
+			{
+				m_dims = {*size};
+			}
+
 			virtual void enter_vector(index_t* size)
 			{
 				m_dims = {*size};
@@ -131,6 +141,14 @@ namespace shogun
 			}
 
 			virtual void exit_matrix(index_t* rows, index_t* cols)
+			{
+			}
+
+			virtual void exit_sparse_matrix(index_t* rows, index_t* cols)
+			{
+			}
+
+			virtual void exit_sparse_vector(index_t*)
 			{
 			}
 

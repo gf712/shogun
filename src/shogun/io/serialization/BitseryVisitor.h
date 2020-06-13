@@ -107,6 +107,15 @@ namespace shogun
 					m_s.value4b(*rows);
 					m_s.value4b(*cols);
 				}
+				void enter_sparse_matrix(index_t* rows, index_t* cols, index_t*) override
+				{
+					m_s.value4b(*rows);
+					m_s.value4b(*cols);
+				}
+				void enter_sparse_vector(index_t* size) override
+				{
+					m_s.value4b(*size);
+				}
 				void enter_vector(index_t* size) override
 				{
 					m_s.value4b(*size);
@@ -127,6 +136,8 @@ namespace shogun
 				void enter_matrix_row(index_t *rows, index_t *cols) override {}
 				void exit_matrix_row(index_t *rows, index_t *cols) override {}
 				void exit_matrix(index_t* rows, index_t* cols) override {}
+				void exit_sparse_matrix(index_t* rows, index_t* cols) override {}
+				void exit_sparse_vector(index_t* rows) override {}
 				void exit_vector(index_t* size) override {}
 				void exit_std_vector(size_t* size) override {}
 				void exit_map(size_t* size) override {}

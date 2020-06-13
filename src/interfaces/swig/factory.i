@@ -11,6 +11,27 @@ namespace shogun{
 	{
 		return create<Features>(mat);
 	}
+	template <typename T>
+	std::shared_ptr<Features> create_features(SGSparseMatrix<T> mat)
+	{
+		return create<Features>(mat);
+	}
+	template <typename T>
+	std::shared_ptr<Features> create_sparse_features(SGMatrix<T> mat)
+	{
+		return details::sparse_features(mat);
+	}
+	template <typename T>
+	std::shared_ptr<Features> create_sparse_features(SGSparseMatrix<T> mat)
+	{
+		return details::sparse_features(mat);
+	}
+
+	template <typename T>
+	std::shared_ptr<Features> create_features(SGSparseMatrix<T> mat)
+	{
+		return create<Features>(mat);
+	}
 
 	std::shared_ptr<Features> create_features(
 	    std::shared_ptr<File> file, EPrimitiveType primitive_type = PT_FLOAT64)
@@ -53,6 +74,7 @@ namespace shogun{
 }
 %}
 %template(create_features) shogun::create_features<float64_t>;
+%template(create_sparse_features) shogun::create_sparse_features<float64_t>;
 
 #ifndef SWIGJAVA // FIXME: Java only uses DoubleMatrix atm, remove guard once that is resolved
 

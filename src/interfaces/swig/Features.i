@@ -84,7 +84,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<bool>)
     %shared_ptr(shogun::StreamingStringFeatures<bool>)
     %shared_ptr(shogun::StringFileFeatures<bool>)
-    %shared_ptr(shogun::SparseFeatures<bool>)
     %shared_ptr(shogun::StreamingSparseFeatures<bool>)
     %shared_ptr(shogun::StreamingDenseFeatures<bool>)
     %shared_ptr(shogun::DenseSubsetFeatures<bool>)
@@ -93,7 +92,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<char>)
     %shared_ptr(shogun::StreamingStringFeatures<char>)
     %shared_ptr(shogun::StringFileFeatures<char>)
-    %shared_ptr(shogun::SparseFeatures<char>)
     %shared_ptr(shogun::StreamingSparseFeatures<char>)
     %shared_ptr(shogun::StreamingDenseFeatures<char>)
     %shared_ptr(shogun::DenseSubsetFeatures<char>)
@@ -102,7 +100,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<uint8_t>)
     %shared_ptr(shogun::StreamingStringFeatures<uint8_t>)
     %shared_ptr(shogun::StringFileFeatures<uint8_t>)
-    %shared_ptr(shogun::SparseFeatures<uint8_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<uint8_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<uint8_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<uint8_t>)
@@ -111,7 +108,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<int16_t>)
     %shared_ptr(shogun::StreamingStringFeatures<int16_t>)
     %shared_ptr(shogun::StringFileFeatures<int16_t>)
-    %shared_ptr(shogun::SparseFeatures<int16_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<int16_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<int16_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<int16_t>)
@@ -120,7 +116,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<uint16_t>)
     %shared_ptr(shogun::StreamingStringFeatures<uint16_t>)
     %shared_ptr(shogun::StringFileFeatures<uint16_t>)
-    %shared_ptr(shogun::SparseFeatures<uint16_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<uint16_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<uint16_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<uint16_t>)
@@ -129,7 +124,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<int32_t>)
     %shared_ptr(shogun::StreamingStringFeatures<int32_t>)
     %shared_ptr(shogun::StringFileFeatures<int32_t>)
-    %shared_ptr(shogun::SparseFeatures<int32_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<int32_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<int32_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<int32_t>)
@@ -138,7 +132,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<uint32_t>)
     %shared_ptr(shogun::StreamingStringFeatures<uint32_t>)
     %shared_ptr(shogun::StringFileFeatures<uint32_t>)
-    %shared_ptr(shogun::SparseFeatures<uint32_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<uint32_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<uint32_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<uint32_t>)
@@ -147,7 +140,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<int64_t>)
     %shared_ptr(shogun::StreamingStringFeatures<int64_t>)
     %shared_ptr(shogun::StringFileFeatures<int64_t>)
-    %shared_ptr(shogun::SparseFeatures<int64_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<int64_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<int64_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<int64_t>)
@@ -156,7 +148,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<uint64_t>)
     %shared_ptr(shogun::StreamingStringFeatures<uint64_t>)
     %shared_ptr(shogun::StringFileFeatures<uint64_t>)
-    %shared_ptr(shogun::SparseFeatures<uint64_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<uint64_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<uint64_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<uint64_t>)
@@ -165,7 +156,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<float32_t>)
     %shared_ptr(shogun::StreamingStringFeatures<float32_t>)
     %shared_ptr(shogun::StringFileFeatures<float32_t>)
-    %shared_ptr(shogun::SparseFeatures<float32_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<float32_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<float32_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<float32_t>)
@@ -174,7 +164,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<float64_t>)
     %shared_ptr(shogun::StreamingStringFeatures<float64_t>)
     %shared_ptr(shogun::StringFileFeatures<float64_t>)
-    %shared_ptr(shogun::SparseFeatures<float64_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<float64_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<float64_t>)
     %shared_ptr(shogun::DenseFeatures<float64_t>)
@@ -188,7 +177,6 @@ PROTOCOLS_DENSELABELS(RegressionLabels, RegressionLabels, float64_t, "d\0", NPY_
     %shared_ptr(shogun::StringFeatures<floatmax_t>)
     %shared_ptr(shogun::StreamingStringFeatures<floatmax_t>)
     %shared_ptr(shogun::StringFileFeatures<floatmax_t>)
-    %shared_ptr(shogun::SparseFeatures<floatmax_t>)
     %shared_ptr(shogun::StreamingSparseFeatures<floatmax_t>)
     %shared_ptr(shogun::StreamingDenseFeatures<floatmax_t>)
     %shared_ptr(shogun::DenseSubsetFeatures<floatmax_t>)
@@ -279,48 +267,6 @@ namespace shogun
 #endif
 #ifdef USE_UINT64
     %template(StringFileUlongFeatures) StringFileFeatures<uint64_t>;
-#endif
-}
-
-/* Templated Class SparseFeatures */
-%include <shogun/features/SparseFeatures.h>
-namespace shogun
-{
-#ifdef USE_BOOL
-    %template(SparseBoolFeatures) SparseFeatures<bool>;
-#endif
-#ifdef USE_CHAR
-    %template(SparseCharFeatures) SparseFeatures<char>;
-#endif
-#ifdef USE_UINT8
-    %template(SparseByteFeatures) SparseFeatures<uint8_t>;
-#endif
-#ifdef USE_INT16
-    %template(SparseShortFeatures) SparseFeatures<int16_t>;
-#endif
-#ifdef USE_UINT16
-    %template(SparseWordFeatures) SparseFeatures<uint16_t>;
-#endif
-#ifdef USE_INT32
-    %template(SparseIntFeatures) SparseFeatures<int32_t>;
-#endif
-#ifdef USE_UINT32
-    %template(SparseUIntFeatures) SparseFeatures<uint32_t>;
-#endif
-#ifdef USE_INT64
-    %template(SparseLongFeatures) SparseFeatures<int64_t>;
-#endif
-#ifdef USE_UINT64
-    %template(SparseUlongFeatures) SparseFeatures<uint64_t>;
-#endif
-#ifdef USE_FLOAT32
-    %template(SparseShortRealFeatures) SparseFeatures<float32_t>;
-#endif
-#ifdef USE_FLOAT64
-    %template(SparseRealFeatures) SparseFeatures<float64_t>;
-#endif
-#ifdef USE_FLOATMAX
-    %template(SparseLongRealFeatures) SparseFeatures<floatmax_t>;
 #endif
 }
 

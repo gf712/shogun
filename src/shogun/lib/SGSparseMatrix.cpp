@@ -282,7 +282,7 @@ template<class T> void SGSparseMatrix<T>::from_dense(SGMatrix<T> full)
 		}
 	}
 
-	io::info("sparse feature matrix has {} entries (full matrix had {}, sparsity {:2.2f}%%)",
+	io::info("sparse feature matrix has {} entries (full matrix had {}, sparsity {:2.2f}%)",
 			num_total_entries, int64_t(num_feat)*num_vec, (100.0*num_total_entries)/(int64_t(num_feat)*num_vec));
 	SG_FREE(num_feat_entries);
 }

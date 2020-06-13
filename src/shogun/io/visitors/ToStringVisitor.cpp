@@ -76,6 +76,16 @@ void ToStringVisitor::enter_matrix(index_t *rows, index_t *cols) {
 	m_buffer = ", ";
 }
 
+void ToStringVisitor::enter_sparse_matrix(index_t *rows, index_t *cols, index_t*) {
+	stream() << "SparseMatrix<"<< *rows << "x" << *cols << ">( ";
+	m_buffer = ", ";
+}
+
+void ToStringVisitor::enter_sparse_vector(index_t *size) {
+	stream() << "SparseVector<"<< *size << ">( ";
+	m_buffer = ", ";
+}
+
 void ToStringVisitor::enter_vector(index_t *size) {
 	stream() << "Vector<" << *size << ">( ";
 	m_buffer = ", ";
@@ -107,6 +117,16 @@ void ToStringVisitor::on(floatmax_t *v) {
 }
 
 void ToStringVisitor::exit_matrix(index_t *rows, index_t *cols) {
+	stream() << ")";
+	m_buffer.clear();
+}
+
+void ToStringVisitor::exit_sparse_matrix(index_t *rows, index_t *cols) {
+	stream() << ")";
+	m_buffer.clear();
+}
+
+void ToStringVisitor::exit_sparse_vector(index_t *) {
 	stream() << ")";
 	m_buffer.clear();
 }

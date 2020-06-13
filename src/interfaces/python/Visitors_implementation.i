@@ -72,6 +72,60 @@
 				return result;
 			}
 
+			template <typename T>
+			PyObject* create_sparse_array(const T* val, const std::vector<std::ptrdiff_t>& dims)
+			{
+				T* copy;
+				if (dims.size() == 2)
+				{
+					error("SGSparseVector not implemented");
+				}
+				else if (dims.size() == 3)
+				{
+					auto num_feat = dims[0];
+					auto num_vec = dims[1];
+					auto nnz = dims[2]
+					if (m_interface_obj == nullptr)
+					{
+						m_interface_obj = PyTuple_New(3);
+						int32_t* indptr = SG_MALLOC(int32_t, num_vec+1);
+						index_t* indices = SG_MALLOC(index_t, nnz);
+						type* data = SG_MALLOC(type, nnz);
+
+						npy_intp indptr_dims = num_vec+1;
+						auto* indptr_py = PyArray_NewFromDescr(&PyArray_Type,
+								descr, 1, &indptr_dims, NULL, (void*) indptr,  NPY_ARRAY_FARRAY | NPY_ARRAY_WRITEABLE, NULL);
+						PyArray_ENABLEFLAGS((PyArrayObject*) indptr_py, NPY_ARRAY_OWNDATA);
+
+						auto* npy_intp dims = num_feat * num_vec; // allocate excess memory
+						indices_py = PyArray_NewFromDescr(&PyArray_Type,
+								descr, 1, &dims, NULL, (void*) indices,  NPY_ARRAY_FARRAY | NPY_ARRAY_WRITEABLE, NULL);
+						PyArray_ENABLEFLAGS((PyArrayObject*) indices_py, NPY_ARRAY_OWNDATA);
+
+						auto* data_py = PyArray_NewFromDescr(&PyArray_Type,
+								descr_data, 1, &dims, NULL, (void*) data,  NPY_ARRAY_FARRAY | NPY_ARRAY_WRITEABLE, NULL);
+						PyArray_ENABLEFLAGS((PyArrayObject*) data_py, NPY_ARRAY_OWNDATA);
+
+						PyTuple_SetItem(m_interface_obj, 0, data_py);
+						PyTuple_SetItem(m_interface_obj, 1, indices_py);
+						PyTuple_SetItem(m_interface_obj, 2, indptr_py);
+					}
+					PyTuple_GetItem()
+					auto* data_py = PyTuple_SetItem(m_interface_obj, 0);
+					auto* indices_py = PyTuple_SetItem(m_interface_obj, 1);
+					auto* indptr_py = PyTuple_SetItem(m_interface_obj, 2);
+
+					error("SGSparseMatrix not implemented");
+				}
+				else
+					error("Expected an array with one or two dimensions, but got {}.", dims.size());
+				PyArray_Descr* descr=PyArray_DescrFromType(sg_to_npy_type<T>::type);
+				PyObject* result = PyArray_NewFromDescr(&PyArray_Type,
+					descr, dims.size(), const_cast<npy_intp*>(dims.data()), nullptr, (void*)copy,  NPY_ARRAY_FARRAY | NPY_ARRAY_WRITEABLE, nullptr);
+				PyArray_ENABLEFLAGS((PyArrayObject*) result, NPY_ARRAY_OWNDATA);
+				return m_interface_obj;
+			}
+
 			template <typename>
 			PyObject* create_new_list(size_t size)
 			{

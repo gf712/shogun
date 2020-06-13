@@ -16,6 +16,8 @@
 #include <shogun/lib/SGVector.h>
 #include <shogun/io/SGIO.h>
 
+#include <numeric>
+
 namespace shogun
 {
 
@@ -87,6 +89,13 @@ template <class T> class SGSparseMatrix : public SGReferencedData
 				result[i]=sparse_matrix[i].dense_dot(1.0, v.vector, v.vlen, 0.0);
 
 			return result;
+		}
+
+		index_t nnz() const
+		{
+			return std::accumulate(sparse_matrix, 
+					sparse_matrix+num_vectors, 0, 
+					[](const auto& lhs, const auto& rhs) {return lhs + rhs.num_feat_entries;});
 		}
 
 		/** compute sparse-matrix dense-vector multiplication

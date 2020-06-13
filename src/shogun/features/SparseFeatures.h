@@ -230,7 +230,7 @@ template <class ST> class SparseFeatures : public DotFeatures
 		 *
 		 * @return full dense feature matrix
 		 */
-		SGMatrix<ST> get_full_feature_matrix();
+		SGMatrix<ST> get_full_feature_matrix() const;
 
 		/** creates a sparse feature matrix from a full dense feature matrix
 		 * necessary to set feature_matrix, num_features and num_vectors

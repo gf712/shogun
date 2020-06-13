@@ -252,7 +252,7 @@ template<class ST> void SparseFeatures<ST>::set_sparse_feature_matrix(SGSparseMa
 	}
 }
 
-template<class ST> SGMatrix<ST> SparseFeatures<ST>::get_full_feature_matrix()
+template<class ST> SGMatrix<ST> SparseFeatures<ST>::get_full_feature_matrix() const
 {
 	SGMatrix<ST> full(get_num_features(), get_num_vectors());
 	full.zero();
@@ -580,16 +580,10 @@ template<class ST> void SparseFeatures<ST>::init()
 {
 	set_generic<ST>();
 
-	/*m_parameters->add_vector(&sparse_feature_matrix.sparse_matrix, &sparse_feature_matrix.num_vectors,
-			"sparse_feature_matrix",
-			"Array of sparse vectors.");*/
-	watch_param(
-		"sparse_feature_matrix", &sparse_feature_matrix.sparse_matrix,
-		&sparse_feature_matrix.num_vectors);
-	watch_param("sparse_feature_matrix.num_features",  &sparse_feature_matrix.num_features);
-
-	/*m_parameters->add(&sparse_feature_matrix.num_features, "sparse_feature_matrix.num_features",
-			"Total number of features.");*/
+	SG_ADD(&sparse_feature_matrix, "sparse_feature_matrix", "Array of sparse vectors.")
+	SG_ADD(&sparse_feature_matrix.num_features, "num_features", "Number of features.")
+	SG_ADD(&sparse_feature_matrix.num_vectors, "num_vectors", "Number of vectors.")
+	watch_method("full_feature_matrix", &SparseFeatures<ST>::get_full_feature_matrix);
 }
 
 #define GET_FEATURE_TYPE(sg_type, f_type)									\

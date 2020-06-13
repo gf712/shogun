@@ -9,13 +9,10 @@ parameter_list = [[traindat,testdat,10,3,1.0],[traindat,testdat,10,4,1.0]]
 def kernel_sparse_poly (fm_train_real=traindat,fm_test_real=testdat,
 						cache_size=10,degree=3,c=1.0):
 
-	from shogun import SparseRealFeatures
 	import shogun as sg
 
-	feats_train=SparseRealFeatures(fm_train_real)
-	feats_test=SparseRealFeatures(fm_test_real)
-
-
+	feats_train=sg.create_features(fm_train_real)
+	feats_test=sg.create_features(fm_test_real)
 
 	kernel=sg.create_kernel("PolyKernel", cache_size=cache_size, degree=degree,
 					 c=c)

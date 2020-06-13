@@ -10,7 +10,6 @@
 #include <shogun/features/DirectorDotFeatures.h>
 #include <shogun/features/BinnedDotFeatures.h>
 #include <shogun/features/streaming/StreamingDotFeatures.h>
-#include <shogun/features/SparseFeatures.h>
 #include <shogun/features/streaming/StreamingSparseFeatures.h>
 #include <shogun/features/streaming/StreamingDenseFeatures.h>
 #include <shogun/features/DummyFeatures.h>

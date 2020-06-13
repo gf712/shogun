@@ -26,7 +26,7 @@ template <class T> struct SGSparseVectorEntry
 	/** entry ... */
 	T entry;
 
-	/** Comparson of entry
+	/** Comparisson of entry
 	 * @return true iff index and value (numerically for floats) are equal
 	 */
 	inline bool operator==(const SGSparseVectorEntry<T>& other) const;

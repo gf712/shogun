@@ -207,6 +207,14 @@ public:
 			m_json_writer.StartArray();
 		}
 	}
+	void enter_sparse_matrix(index_t* rows, index_t* cols, index_t*) override
+	{
+		enter_matrix(rows, cols);
+	}
+	void enter_sparse_vector(index_t* size) override
+	{
+		enter_vector(size);
+	}
 	void enter_vector(index_t* size) override
 	{
 		SG_DEBUG("writing vector of size: {}", *size);
@@ -254,6 +262,8 @@ public:
 	void enter_auto_value(bool*) override {}
 	void exit_matrix_row(index_t *rows, index_t *cols) override {}
 	void exit_matrix(index_t* rows, index_t* cols) override {}
+	void exit_sparse_matrix(index_t* rows, index_t* cols) override {}
+	void exit_sparse_vector(index_t*) override {}
 	void exit_vector(index_t* size) override {}
 	void exit_std_vector(size_t* size) override {}
 	void exit_map(size_t* size) override {}

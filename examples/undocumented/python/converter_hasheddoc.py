@@ -6,6 +6,10 @@ strings=['example document 1','example document 2','example document 3','example
 parameter_list=[[strings]]
 
 def converter_hasheddoc(strings):
+	from shogun import RAWBYTE, StringCharFeatures, Features, HashedDocDotFeatures
+	from shogun import NGramTokenizer
+	from numpy import array
+
 	#create string features
 	f=sg.create_string_features(strings, sg.RAWBYTE, sg.PT_CHAR)
 

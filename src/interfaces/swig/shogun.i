@@ -215,6 +215,7 @@ import org.jblas.*;
 		vec[0] = value;
 		$self->put(tag_float64vec, vec);
 	}
+#elif SWIGR || SWIGOCTAVE
 	else if (Tag<SGVector<bool>> tag_boolvec(name); $self->has(tag_boolvec))
 	{
 		SGVector<bool> vec(1);
@@ -350,22 +351,28 @@ namespace shogun
 
 #ifndef SWIGJAVA
 %template(put) SGObject::put<SGMatrix<float64_t>, SGMatrix<float64_t>>;
+%template(put) SGObject::put<SGSparseMatrix<float64_t>, SGSparseMatrix<float64_t>>;
 #endif // SWIGJAVA
 
+#ifndef SWIGPYTHON || SWIGR
 %template(get_real) SGObject::get<float64_t, void>;
 %template(get_int) SGObject::get<int32_t, void>;
 %template(get_long) SGObject::get<int64_t, void>;
 %template(get_real_matrix) SGObject::get<SGMatrix<float64_t>, void>;
+%template(get_real_matrix) SGObject::get<SGSparseMatrix<float64_t>, void>;
 %template(get_char_string_list) SGObject::get<std::vector<SGVector<char>>, void>;
 %template(get_word_string_list) SGObject::get<std::vector<SGVector<uint16_t>>, void>;
 %template(get_option) SGObject::get<std::string, void>;
+#endif
 
 #ifndef SWIGJAVA
 %template(get_real_vector) SGObject::get<SGVector<float64_t>, void>;
 %template(get_int_vector) SGObject::get<SGVector<int32_t>, void>;
 #else // SWIGJAVA
+#ifndef SWIGPYTHON || SWIGR
 %template(get_real_vector) SGObject::get_vector_as_matrix_dispatcher<SGMatrix<float64_t>, float64_t>;
 %template(get_int_vector) SGObject::get_vector_as_matrix_dispatcher<SGMatrix<int32_t>, int32_t>;
+#endif
 #endif // SWIGJAVA
 %template(put) SGObject::put<std::string, std::string>;
 
