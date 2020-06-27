@@ -435,50 +435,5 @@ void HistogramWordStringKernel::init()
 	watch_param("variance", &variance, &num_params2);
 
 	SG_ADD(&estimate, "estimate", "Plugin Estimate.", ParameterProperties::CONSTRAIN,
-			SG_CONSTRAINT(dynamic_cast_checker<std::shared_ptr<Machine>, PluginEstimate>()));
+		SG_CONSTRAINT(castable<PluginEstimate>()));
 }
-
-#ifdef DEBUG_HWSK_COMPUTATION
-float64_t CHistogramWordStringKernel::compute_slow(int32_t idx_a, int32_t idx_b)
-{
-	int32_t alen, blen;
-	bool free_avec, free_bvec;
-	uint16_t* avec=std::static_pointer_cast<CStringFeatures<uint16_t>>(lhs)->get_feature_vector(idx_a, alen, free_avec);
-	uint16_t* bvec=std::static_pointer_cast<CStringFeatures<uint16_t>>(rhs)->get_feature_vector(idx_b, blen, free_bvec);
-	auto plugin_estimate = std::static_pointer_cast<PluginEstimate>(estimate);
-
-	// can only deal with strings of same length
-	ASSERT(alen==blen)
-
-	float64_t result=(plugin_estimate->posterior_log_odds_obsolete(avec, alen)-mean[0])*
-		(plugin_estimate->posterior_log_odds_obsolete(bvec, blen)-mean[0])/(variance[0]);
-	result+= sum_m2_s2 ; // does not contain 0-th element
-
-	for (int32_t i=0; i<alen; i++)
-	{
-		int32_t a_idx = compute_index(i, avec[i]) ;
-		int32_t b_idx = compute_index(i, bvec[i]) ;
-
-		if (avec[i]==bvec[i])
-		{
-			float64_t dd = plugin_estimate->log_derivative_pos_obsolete(avec[i], i) ;
-			result   += dd*dd/variance[a_idx] ;
-			dd        = plugin_estimate->log_derivative_neg_obsolete(avec[i], i) ;
-			result   += dd*dd/variance[a_idx+num_params] ;
-		} ;
-
-		result -= plugin_estimate->log_derivative_pos_obsolete(avec[i], i)*mean[a_idx]/variance[a_idx] ;
-		result -= plugin_estimate->log_derivative_pos_obsolete(bvec[i], i)*mean[b_idx]/variance[b_idx] ;
-		result -= plugin_estimate->log_derivative_neg_obsolete(avec[i], i)*mean[a_idx+num_params]/variance[a_idx+num_params] ;
-		result -= plugin_estimate->log_derivative_neg_obsolete(bvec[i], i)*mean[b_idx+num_params]/variance[b_idx+num_params] ;
-	}
-
-	if (initialized)
-		result /=  (sqrtdiag_lhs[idx_a]*sqrtdiag_rhs[idx_b]) ;
-
-	std::static_pointer_cast<CStringFeatures<uint16_t>>(lhs)->free_feature_vector(avec, idx_a, free_avec);
-	std::static_pointer_cast<CStringFeatures<uint16_t>>(rhs)->free_feature_vector(bvec, idx_b, free_bvec);
-	return result;
-}
-
-#endif
